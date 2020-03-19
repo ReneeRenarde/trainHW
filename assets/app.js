@@ -1,16 +1,29 @@
 $(document).ready(function(){
-    //FIREBASE=========================================================
-    var config = {
- 
-      };
-    firebase.initializeApp(config);
+    
+  //FIREBASE=========================================================
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyDiYOhvXZOD9MawMOCXaxebonL2cPktqvE",
+    authDomain: "trainhw-1.firebaseapp.com",
+    databaseURL: "https://trainhw-1.firebaseio.com",
+    projectId: "trainhw-1",
+    storageBucket: "trainhw-1.appspot.com",
+    messagingSenderId: "786123140773",
+    appId: "1:786123140773:web:e88a2f0d7d4debbacee74c"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+
     //VARIABLES=========================================================
     var database = firebase.database();
+
     //CONVERT TRAIN TIME================================================
-    //var currentTime = moment();
-    //console.log("Current Time: " + currentTime);
+    var currentTime = moment();
+    console.log("Current Time: " + currentTime);
+
     //FUNCTIONS=========================================================
-    
+
     // CAPTURE BUTTON CLICK
     $("#submit").on("click", function() {
     
