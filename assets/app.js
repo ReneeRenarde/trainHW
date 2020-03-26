@@ -40,9 +40,9 @@ $(document).ready(function(){
     // Creates local "temporary" object for holding train data
     var trainAdded =   {
             name: name,
-            destination: dest,
+            dest: dest,
             time: time,
-            freqruency: freq,
+            freq: freq,
             timeAdded: firebase.database.ServerValue.TIMESTAMP
     };
     
@@ -73,9 +73,8 @@ $(document).ready(function(){
        
         //CURRENT TIME
         var currentTime = moment();
-        console.log("CURRENT TIME: " + moment().format('HH:mm'));
+        console.log("CURRENT TIME: " + currentTime.format('HH:mm'));
        
-        //FIRST TIME: PUSHED BACK ONE YEAR TO COME BEFORE CURRENT TIME
         // var dConverted = moment(time,'hh:mm').subtract(1, 'years');
         var dConverted = moment(childSnapshot.val().time, 'HH:mm').subtract(1, 'years');
         console.log("DATE CONVERTED: " + dConverted);
