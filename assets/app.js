@@ -1,19 +1,19 @@
 $(document).ready(function(){
     
   //FIREBASE=========================================================
-  // Your web app's Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyDiYOhvXZOD9MawMOCXaxebonL2cPktqvE",
-    authDomain: "trainhw-1.firebaseapp.com",
-    databaseURL: "https://trainhw-1.firebaseio.com",
-    projectId: "trainhw-1",
-    storageBucket: "trainhw-1.appspot.com",
-    messagingSenderId: "786123140773",
-    appId: "1:786123140773:web:e88a2f0d7d4debbacee74c"
+   // Your web app's Firebase configuration
+   var firebaseConfig = {
+    apiKey: "AIzaSyAP4iSvAf12ZShUenOj89Enh0f7PeZVZEU",
+    authDomain: "tryagain-trains.firebaseapp.com",
+    databaseURL: "https://tryagain-trains.firebaseio.com",
+    projectId: "tryagain-trains",
+    storageBucket: "tryagain-trains.appspot.com",
+    messagingSenderId: "639684800919",
+    appId: "1:639684800919:web:720987a74fe706e201d4d2"
   };
+
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
-
 
     //VARIABLES=========================================================
     var database = firebase.database();
@@ -24,23 +24,31 @@ $(document).ready(function(){
 
     //FUNCTIONS=========================================================
 
+    // // Prevent Default
+    // $("#submit").on("click", function(event) {
+    //     event.preventDefault();
+
     // CAPTURE BUTTON CLICK
     $("#submit").on("click", function() {
     
-    //VALUES FOR EACH VARIABLE IN HTML
+    //grabs user input
         var name = $('#nameInput').val().trim();
         var dest = $('#destInput').val().trim();
         var time = $('#timeInput').val().trim();
         var freq = $('#freqInput').val().trim();
     
-    // PUSH NEW ENTRY TO FIREBASE
-        database.ref().push({
+    // Creates local "temporary" object for holding train data
+    var trainAdded =   {
             name: name,
-            dest: dest,
+            destination: dest,
             time: time,
-            freq: freq,
+            freqruency: freq,
             timeAdded: firebase.database.ServerValue.TIMESTAMP
-        });
+    };
+    
+    // push train data to database
+    database.ref().push(trainAdded)
+
         // NO REFRESH
         $("input").val('');
         return false;
@@ -62,9 +70,11 @@ $(document).ready(function(){
     
     //CONVERT TRAIN TIME================================================
         var freq = parseInt(freq);
+       
         //CURRENT TIME
         var currentTime = moment();
         console.log("CURRENT TIME: " + moment().format('HH:mm'));
+       
         //FIRST TIME: PUSHED BACK ONE YEAR TO COME BEFORE CURRENT TIME
         // var dConverted = moment(time,'hh:mm').subtract(1, 'years');
         var dConverted = moment(childSnapshot.val().time, 'HH:mm').subtract(1, 'years');
@@ -76,18 +86,21 @@ $(document).ready(function(){
         var tConverted = moment(trainTime, 'HH:mm').subtract(1, 'years');
         var tDifference = moment().diff(moment(tConverted), 'minutes');
         console.log("DIFFERENCE IN TIME: " + tDifference);
+      
         //REMAINDER 
         var tRemainder = tDifference % freq;
         console.log("TIME REMAINING: " + tRemainder);
+      
         //MINUTES UNTIL NEXT TRAIN
         var minsAway = freq - tRemainder;
         console.log("MINUTES UNTIL NEXT TRAIN: " + minsAway);
+      
         //NEXT TRAIN
         var nextTrain = moment().add(minsAway, 'minutes');
         console.log("ARRIVAL TIME: " + moment(nextTrain).format('HH:mm A'));
-        //console.log(==============================);
+        
     
-     //TABLE DATA=====================================================
+     //TABLE DATA
      //APPEND TO DISPLAY IN TRAIN TABLE
     $('#currentTime').text(currentTime);
     $('#trainTable').append(
